@@ -1,0 +1,9 @@
+.logo{
+    width: 100%;
+    position: relative;
+    margin-bottom: 1vh;
+}
+
+.logo:hover{
+    cursor: pointer;
+}
