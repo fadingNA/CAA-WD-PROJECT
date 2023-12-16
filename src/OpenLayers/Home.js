@@ -52,8 +52,27 @@ function Home() {
           visible={layerConfig.visible !== false}
         />
       );
+    } else if (layerConfig.type.continas("ImageLayer")) {
+      return (
+        <ImageLayer
+          source={
+            new ImageWMS({
+              url: WMS[0].URL,
+              params: {
+                LAYERS: layerConfig.params.LAYERS, // Corrected here
+                TILED: layerConfig.params.TILED,
+                ...layerConfig.params,
+              },
+              transition: layerConfig.transition || 0,
+            })
+          }
+          zIndex={layerConfig.zIndex || 1}
+          opacity={layerConfig.opacity || 1}
+          visible={layerConfig.visible !== false}
+        />
+      );
     }
-    // Handle other layer types if needed
+
     return null;
   };
 
@@ -65,7 +84,6 @@ function Home() {
             <Map center={center} zoom={zoom}>
               <Layers>
                 <TileLayer source={new OSM()} zIndex={1} opacity={1} />
-
                 {WMS[0].Setting.map(createLayer)}
               </Layers>
               <FullScreenMapControl />
