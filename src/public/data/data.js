@@ -1,0 +1,90 @@
+const wmsdata = [
+  {
+    URL: "https://geo.weather.gc.ca/geomet/",
+    Setting: [
+      {
+        type: "TileLayer",
+        name: "Air Temperature",
+        params: {
+          LAYERS: "GDPS.ETA_TT",
+          TILED: true,
+        },
+        transition: 0,
+        opacity: 0.5,
+        zIndex: 3,
+      },
+      {
+        type: "ImageLayer",
+        name: "Wind Direction",
+        TILED: true,
+        params: {
+          crs: "EPSG:4326",
+          LAYERS: "GDWPS_25km_Winds_10m_PT1H",
+          dpiMode: 7,
+          format: "image/png",
+          tilePixelRatio: 0,
+          styles: "",
+          transition: 0,
+          visible: true,
+          maxZoom: 20,
+        },
+        ratio: 1,
+        serverType: "geoserver",
+      },
+      {
+        type: "ImageLayer",
+        name: "Current Conditions",
+        PARAMS: {
+          crs: "EPSG:4326",
+          LAYERS: "CURRENT_CONDITIONS",
+          dpiMode: 7,
+          format: "image/png",
+          tilePixelRatio: 0,
+          styles: "",
+          TILED: true,
+        },
+        ratio: 1,
+        serverType: "geoserver",
+      },
+      {
+        type: "ImageLayer",
+        name: "Wind Direction Visualization",
+
+        params: {
+          crs: "EPSG:4326",
+          LAYERS: "GDWPS_25km_WVDIR_PT1H",
+          dpiMode: 7,
+          format: "image/png",
+          tilePixelRatio: 0,
+          styles: "",
+          transition: 0,
+          visible: true,
+          maxZoom: 20,
+          TILED: true,
+        },
+        ratio: 1,
+        serverType: "geoserver",
+      },
+      {
+        type: "ImageLayer",
+        name: "Land Air Temperature",
+        TILED: true,
+        params: {
+          crs: "EPSG:4326",
+          LAYERS: "CaLDAS-NSRPS_2.5km_AirTemp_1.5m",
+          dpiMode: 7,
+          format: "image/png",
+          tilePixelRatio: 0,
+          styles: "",
+          transition: 0,
+          visible: true,
+          maxZoom: 20,
+        },
+        ratio: 1,
+        serverType: "geoserver",
+      },
+    ],
+  },
+];
+
+export default wmsdata;

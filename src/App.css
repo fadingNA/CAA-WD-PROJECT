@@ -12,9 +12,51 @@
 .app-container {
     display: flex;
     height: 100vh;
-  }
+}
+.map-container {
+    height: 100%;
+    position: relative; /* Set the map container to relative */
+}
+.map-container:-webkit-full-screen {
+    height: 100%;
+}
+.map-container:-ms-fullscreen {
+    height: 100%;
+}
+.map-container:fullscreen {
+    height: 100%;
+}
   
 
-  
+.legend {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 400px;
+    /* Rest of your legend
+     styles */
+     background: linear-gradient(
+    to right, 
+    #4815AA,  /* Cyan */
+    #3783FF,  /* Aquamarine */
+    #4DE94C,  /* Green */
+    #ffff00,  /* Yellow */
+    #ffd700,  /* Gold */
+    #ff4500,  /* OrangeRed */
+    #ff0000   /* Red */
+  ); /* Super Red */
+    border-radius: 10px;
+    opacity: 100%;
+}
+
+
+.control-button {
+    position: absolute;
+    top: 10px;
+    bottom: 45px;
+    left: 95%; 
+    background-color: aliceblue;
+    border-radius: 40cm;
+}
  
   

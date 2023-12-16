@@ -1,7 +1,17 @@
 .ol-map {
   flex-grow: 1;
   height: 100vh;
-  
+}
+
+
+.ol-map:-webkit-full-screen {
+    height: 100%;
+}
+.ol-map:-ms-fullscreen {
+    height: 100%;
+}
+.ol-map:fullscreen {
+    height: 100%;
 }
 
 .ol-popup {

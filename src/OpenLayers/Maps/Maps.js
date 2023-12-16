@@ -5,14 +5,13 @@ import * as ol from "ol";
 import { fromLonLat } from "ol/proj";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
 import { toStringXY } from "ol/coordinate";
 import { toLonLat } from "ol/proj";
-import Overlay from 'ol/Overlay';
+import Overlay from "ol/Overlay";
 
+import { FullScreen, defaults as defaultControls } from "ol/control.js";
 
-function Map({ children, center, zoom }) {
+function Map({ children, center, zoom, selectedLayer }) {
   const mapRef = useRef();
   const popupRef = useRef();
   const popupContentRef = useRef();
@@ -22,7 +21,6 @@ function Map({ children, center, zoom }) {
 
   useEffect(() => {
     if (!mapRef.current || !popupRef.current) return;
-    // Define the label style
     overlayRef.current = new Overlay({
       element: popupRef.current,
       autoPan: true,
@@ -31,26 +29,24 @@ function Map({ children, center, zoom }) {
       },
     });
 
-    // Create a feature for the label
     const labelFeature = new Feature({
-      geometry: new Point(fromLonLat(center)), // Set the position for your label
+      geometry: new Point(fromLonLat(center)),
       name: "Label",
     });
 
-    // Create a vector source and add your label feature
-    const vectorSource = new VectorSource({
-      features: [labelFeature],
-    });
-
-    // Create a vector layer using the vector source
-    const vectorLayer = new VectorLayer({
-      source: vectorSource,
-    });
+    const updateLayerVisibility = () => {
+      if (!map) return;
+      const layers = map.getLayers().getArray();
+      layers.forEach((layer) => {
+        const isLayerVisible = layer.get("name") === selectedLayer;
+        layer.setVisible(isLayerVisible);
+      });
+    };
 
     let options = {
-      layers: [], // Include your vector layer
-      controls: [],
-      view: new ol.View({ zoom, center, minZoom: 4, maxZoom: 12 }),
+      controls: defaultControls().extend([new FullScreen()]),
+      layers: [],
+      view: new ol.View({ zoom, center, minZoom: 4}),
       overlays: [overlayRef.current],
     };
 
@@ -84,7 +80,9 @@ function Map({ children, center, zoom }) {
           .then((json) => {
             const contentHtml = `Temperature Surface<br>
               Coordinates (Lon/Lat): <code>${xyCoordinates}</code><br>
-              Value: <code>${Math.round(json.features[0].properties.value)} °C</code>`;
+              Value: <code>${Math.round(
+                json.features[0].properties.value
+              )} °C</code>`;
             popupContentRef.current.innerHTML = contentHtml;
             overlayRef.current.setPosition(coordinate);
           })
@@ -94,13 +92,13 @@ function Map({ children, center, zoom }) {
           });
       }
     });
-
+    updateLayerVisibility();
     return () => mapObject.setTarget(undefined);
-  }, [center, zoom]);
+  }, [center, zoom, selectedLayer]);
 
   const closePopup = () => {
     if (overlayRef.current) {
-      console.log('Debug closePopup');
+      console.log("Debug closePopup");
       overlayRef.current.setPosition(undefined);
     }
   };
@@ -113,9 +111,17 @@ function Map({ children, center, zoom }) {
 
   return (
     <MapContext.Provider value={{ map }}>
-      <div ref={mapRef} className="ol-map">{children}</div>
+      <div ref={mapRef} className="ol-map">
+        {children}
+      </div>
       <div ref={popupRef} className="ol-popup">
-      <button id="popup-closer" className="ol-popup-closer" onClick={closePopup}>X</button>
+        <button
+          id="popup-closer"
+          className="ol-popup-closer"
+          onClick={closePopup}
+        >
+          X
+        </button>
         <div ref={popupContentRef} id="popup-content"></div>
       </div>
     </MapContext.Provider>
@@ -123,3 +129,5 @@ function Map({ children, center, zoom }) {
 }
 
 export default Map;
+
+
