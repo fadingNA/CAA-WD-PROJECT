@@ -9,82 +9,64 @@
     bottom: 0;
     z-index: 1000;
 }
+
 .app-container {
     display: flex;
     height: 100vh;
 }
+
 .map-container {
     height: 100%;
-    position: relative; /* Set the map container to relative */
+    position: relative;
+    /* Set the map container to relative */
 }
+
 .map-container:-webkit-full-screen {
     height: 100%;
 }
+
 .map-container:-ms-fullscreen {
     height: 100%;
 }
+
 .map-container:fullscreen {
     height: 100%;
 }
-  
 
-.legend {
+.search-bar{
+    width: 100%;
+    margin-left: 70px;
+}
+
+.tool-list {
     position: absolute;
     bottom: 10px;
     right: 10px;
     width: 400px;
-    /* Rest of your legend
-     styles */
-     background: linear-gradient(
-    to right, 
-    #4815AA,  /* Cyan */
-    #3783FF,  /* Aquamarine */
-    #4DE94C,  /* Green */
-    #ffff00,  /* Yellow */
-    #ffd700,  /* Gold */
-    #ff4500,  /* OrangeRed */
-    #ff0000   /* Red */
-  ); /* Super Red */
-    border-radius: 10px;
-    opacity: 100%;
-}
+    padding-bottom: 10%;
 
-.custom-slider {
-    background-color: red; /* Temporary color for debugging */
-  }
-
-.control-button {
-    position: absolute;
-    top: 10px;
-    bottom: 45px;
-    left: 95%; 
-    background-color: aliceblue;
-    border-radius: 40cm;
+    .legend {
+        position: absolute;
+        bottom: 50px;
+        width: 360px;
+        background: linear-gradient(to right,
+                #4815AA,
+                /* Cyan */
+                #3783FF,
+                /* Aquamarine */
+                #4DE94C,
+                /* Green */
+                #ffff00,
+                /* Yellow */
+                #ffd700,
+                /* Gold */
+                #ff4500,
+                /* OrangeRed */
+                #ff0000
+                /* Red */
+            );
+        /* Super Red */
+        border-radius: 10px;
+        opacity: 100%;
+    }
 }
- 
-  /* Slider Container */
-.slider-container {
-    position: absolute; /* You can adjust this based on your layout needs */
-    top: 10px; /* Adjust the position as needed */
-    left: 10px;
-    width: 200px; /* Set the desired width */
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Ensure it appears above the map */
-  }
-  
-  /* Label for the slider */
-  .slider-container label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  /* The slider itself */
-  .slider-container input[type="range"] {
-    width: 100%;
-    margin: 5px 0;
-  }
-  

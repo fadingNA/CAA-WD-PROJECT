@@ -9,10 +9,11 @@ import SideBar from "../Layout/Sidebar/sidebar";
 import ImageWMS from "ol/source/ImageWMS";
 import ImageLayer from "./Layers/ImageLayer";
 import FullScreenMapControl from "./ControlButton/FullScreen";
-import { ThemeProvider, BaseStyles } from "@primer/react";
+import { ThemeProvider, BaseStyles, Box } from "@primer/react";
 import WMS from "../../public/data/data";
-import Typography from "@material-ui/core/Typography";
-import Slider from "@material-ui/core/Slider";
+import ToolList from "../Controls/ToolLists/ToolList";
+import SearchBar from "../Controls/SearchBars/SearchBar";
+import { bgcolor } from "@mui/system";
 
 function Home() {
   const [center] = useState(fromLonLat([-74, 56]));
@@ -73,7 +74,7 @@ function Home() {
               transition: layerConfig.transition || 0,
             })
           }
-          opacity={opacity}
+          opacity={opacity / 100}
           zIndex={layerConfig.zIndex || 1000}
           visible={isVisible}
         />
@@ -104,6 +105,11 @@ function Home() {
       <BaseStyles>
         <div className="main-container">
           <div className="map-container">
+            <div className="search-bar">
+            <SearchBar />
+
+            </div>
+
             <Map center={center} zoom={zoom}>
               <Layers>
                 <TileLayer source={new OSM()} zIndex={1} opacity={1} />
@@ -116,23 +122,16 @@ function Home() {
               setToggleCurrentCondition={setToggleCurrentConditions}
               setToggleWindDirection={setToggleWindDirection}
             />
-
-            <div className="legend">0</div>
-
-            <div className="control-button">
-              <Typography id="discrete-slider-small-steps" gutterBottom>
-                Opacity
-              </Typography>
-              <Slider
-                value={opacity}
-                onChange={handleOpacityChange}
-                step={10}
-                marks
-                min={10}
-                max={100}
-                valueLabelDisplay="auto"
+            <Box
+              className="tool-list"
+              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            >
+              <ToolList
+                opacity={opacity}
+                handleOpacityChange={handleOpacityChange}
               />
-            </div>
+              <div className="legend">3233</div>
+            </Box>
           </div>
         </div>
       </BaseStyles>
