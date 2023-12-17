@@ -10,37 +10,42 @@ import ImageWMS from "ol/source/ImageWMS";
 import ImageLayer from "./Layers/ImageLayer";
 import FullScreenMapControl from "./ControlButton/FullScreen";
 import { ThemeProvider, BaseStyles } from "@primer/react";
-import WMS from "../public/data/data";
+import WMS from "../../public/data/data";
+import Typography from "@material-ui/core/Typography";
+import Slider from "@material-ui/core/Slider";
 
 function Home() {
   const [center] = useState(fromLonLat([-74, 56]));
   const [zoom] = useState(4);
-  const dynamicLayers = useRef([]);
-  const [toggleWeather, setToggleWeather] = React.useState(false);
-  const [toggleName, setToggleName] = React.useState(false);
-  const [toggleCurrentCondition, setToggleCurrentCondition] =
-    React.useState(false);
-  const [toggleWindDirection, setToggleWindDirection] = React.useState(false);
-  const [toggleLand, setToggleLand] = React.useState(false);
-  useEffect(() => {
-    console.log("WMS Data:", WMS); // Debugging statement
+  const [layers, setLayers] = useState([]);
+  const [toggleWeather, setToggleWeather] = useState(false);
+  const [toggleWindDirection, setToggleWindDirection] = useState(false);
+  const [toggleCurrentConditions, setToggleCurrentConditions] = useState(false);
+  const [opacity, setOpacity] = useState(1);
 
+  useEffect(() => {
     if (WMS && WMS[0] && WMS[0].Setting) {
-      dynamicLayers.current = WMS[0].Setting.map(createLayer);
+      const newLayers = WMS[0].Setting.map(createLayer);
+      setLayers(newLayers);
     } else {
       console.error("WMS data is not in the expected format:", WMS);
     }
-  }, []);
+  }, [toggleWeather, toggleWindDirection, toggleCurrentConditions]);
+
   const createLayer = (layerConfig) => {
+    const isVisible = shouldLayerBeVisible(layerConfig.name);
+    if (!isVisible) return null;
     if (layerConfig.type === "TileLayer") {
-      console.log(layerConfig.zIndex); // Debugging statement
+      console.log(opacity);
+
+      console.log(layerConfig.zIndex);
       return (
         <TileLayer
           source={
             new TileWMS({
               url: WMS[0].URL,
               params: {
-                LAYERS: layerConfig.params.LAYERS, // Corrected here
+                LAYERS: layerConfig.params.LAYERS,
                 TILED: layerConfig.params.TILED,
                 ...layerConfig.params,
               },
@@ -48,32 +53,50 @@ function Home() {
             })
           }
           zIndex={layerConfig.zIndex || 1}
-          opacity={layerConfig.opacity || 1}
-          visible={layerConfig.visible !== false}
+          opacity={opacity / 100}
+          visible={isVisible}
         />
       );
-    } else if (layerConfig.type.continas("ImageLayer")) {
+    } else if (layerConfig.type === "ImageLayer") {
+      console.log(layerConfig);
       return (
         <ImageLayer
           source={
             new ImageWMS({
               url: WMS[0].URL,
               params: {
-                LAYERS: layerConfig.params.LAYERS, // Corrected here
+                LAYERS: layerConfig.params.LAYERS,
                 TILED: layerConfig.params.TILED,
                 ...layerConfig.params,
+                STYLES: "temperature",
               },
               transition: layerConfig.transition || 0,
             })
           }
-          zIndex={layerConfig.zIndex || 1}
-          opacity={layerConfig.opacity || 1}
-          visible={layerConfig.visible !== false}
+          opacity={opacity}
+          zIndex={layerConfig.zIndex || 1000}
+          visible={isVisible}
         />
       );
     }
 
     return null;
+  };
+
+  const shouldLayerBeVisible = (layerName) => {
+    switch (layerName) {
+      case "Air Temperature":
+        return toggleWeather;
+      case "Wind Direction":
+        return toggleWindDirection;
+      case "Current Conditions":
+        return toggleCurrentConditions;
+      default:
+        return false;
+    }
+  };
+  const handleOpacityChange = (event, newOpacity) => {
+    setOpacity(newOpacity);
   };
 
   return (
@@ -90,13 +113,26 @@ function Home() {
             </Map>
             <SideBar
               setToggleWeather={setToggleWeather}
-              setToggleName={setToggleName}
-              setToggleCurrentCondition={setToggleCurrentCondition}
+              setToggleCurrentCondition={setToggleCurrentConditions}
               setToggleWindDirection={setToggleWindDirection}
-              setToggleLand={setToggleLand}
             />
+
             <div className="legend">0</div>
-            <div className="control-button">====</div>
+
+            <div className="control-button">
+              <Typography id="discrete-slider-small-steps" gutterBottom>
+                Opacity
+              </Typography>
+              <Slider
+                value={opacity}
+                onChange={handleOpacityChange}
+                step={10}
+                marks
+                min={10}
+                max={100}
+                valueLabelDisplay="auto"
+              />
+            </div>
           </div>
         </div>
       </BaseStyles>
@@ -105,21 +141,3 @@ function Home() {
 }
 
 export default Home;
-
-/*
-<TileLayer
-                  source={
-                    new TileWMS({
-                      url: "https://geo.weather.gc.ca/geomet/",
-                      params: {
-                        LAYERS: "GDPS.ETA_TT",
-                        TILED: true,
-                      },
-                      transition: 0,
-                    })
-                  }
-                  zIndex={100}
-                  opacity={0.5}
-                />
-
-*/

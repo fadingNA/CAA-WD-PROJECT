@@ -1,5 +1,5 @@
-import Home from "./OpenLayers/Home";
-import NavigationBar from "./Layout/NavBar/NavigationBar";
+import Home from "./components/OpenLayers/Home";
+
 
 function App() {
   return (

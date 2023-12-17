@@ -1,6 +1,6 @@
 import React from "react";
 import "./sidebar.css";
-import logo from "../../public/assets/CAA_logo.png";
+import logo from "../../../public/assets/CAA_logo.png";
 
 function Sidebar({
   setToggleWeather,
@@ -15,9 +15,7 @@ function Sidebar({
       <button onClick={() => setToggleWeather((toggle) => !toggle)}>
         Air temperatures
       </button>
-      <button onClick={() => setToggleName((toggle) => !toggle)}>
-        Province Name
-      </button>
+      
       <button onClick={() => setToggleCurrentCondition((toggle) => !toggle)}>
         Real Time Weather
       </button>

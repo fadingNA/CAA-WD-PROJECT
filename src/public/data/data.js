@@ -1,6 +1,6 @@
 const wmsdata = [
   {
-    URL: "https://geo.weather.gc.ca/geomet/",
+    URL: "https://geo.weather.gc.ca/geomet/?service=WMS&version=1.3.0&request=GetCapabilities",
     Setting: [
       {
         type: "TileLayer",
@@ -34,7 +34,7 @@ const wmsdata = [
       {
         type: "ImageLayer",
         name: "Current Conditions",
-        PARAMS: {
+        params: {
           crs: "EPSG:4326",
           LAYERS: "CURRENT_CONDITIONS",
           dpiMode: 7,
@@ -49,7 +49,6 @@ const wmsdata = [
       {
         type: "ImageLayer",
         name: "Wind Direction Visualization",
-
         params: {
           crs: "EPSG:4326",
           LAYERS: "GDWPS_25km_WVDIR_PT1H",
@@ -68,7 +67,6 @@ const wmsdata = [
       {
         type: "ImageLayer",
         name: "Land Air Temperature",
-        TILED: true,
         params: {
           crs: "EPSG:4326",
           LAYERS: "CaLDAS-NSRPS_2.5km_AirTemp_1.5m",
@@ -79,6 +77,7 @@ const wmsdata = [
           transition: 0,
           visible: true,
           maxZoom: 20,
+          TILED: true,
         },
         ratio: 1,
         serverType: "geoserver",

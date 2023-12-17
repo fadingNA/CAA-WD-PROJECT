@@ -49,6 +49,9 @@
     opacity: 100%;
 }
 
+.custom-slider {
+    background-color: red; /* Temporary color for debugging */
+  }
 
 .control-button {
     position: absolute;
@@ -59,4 +62,29 @@
     border-radius: 40cm;
 }
  
+  /* Slider Container */
+.slider-container {
+    position: absolute; /* You can adjust this based on your layout needs */
+    top: 10px; /* Adjust the position as needed */
+    left: 10px;
+    width: 200px; /* Set the desired width */
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it appears above the map */
+  }
+  
+  /* Label for the slider */
+  .slider-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* The slider itself */
+  .slider-container input[type="range"] {
+    width: 100%;
+    margin: 5px 0;
+  }
   

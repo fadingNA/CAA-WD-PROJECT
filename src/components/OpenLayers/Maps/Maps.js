@@ -46,7 +46,7 @@ function Map({ children, center, zoom, selectedLayer }) {
     let options = {
       controls: defaultControls().extend([new FullScreen()]),
       layers: [],
-      view: new ol.View({ zoom, center, minZoom: 4}),
+      view: new ol.View({ zoom, center, minZoom: 4 }),
       overlays: [overlayRef.current],
     };
 
@@ -129,5 +129,3 @@ function Map({ children, center, zoom, selectedLayer }) {
 }
 
 export default Map;
-
-
