@@ -7,7 +7,6 @@ function Sidebar({
   setToggleName,
   setToggleCurrentCondition,
   setToggleWindDirection,
-  setToggleLand,
 }) {
   return (
     <div className="sidebar">
@@ -15,15 +14,12 @@ function Sidebar({
       <button onClick={() => setToggleWeather((toggle) => !toggle)}>
         Air temperatures
       </button>
-      
+
       <button onClick={() => setToggleCurrentCondition((toggle) => !toggle)}>
         Real Time Weather
       </button>
       <button onClick={() => setToggleWindDirection((toggle) => !toggle)}>
         Check Wind Direction
-      </button>
-      <button onClick={() => setToggleLand((toggle) => !toggle)}>
-        Land
       </button>
     </div>
   );

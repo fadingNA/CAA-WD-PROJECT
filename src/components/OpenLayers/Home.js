@@ -105,11 +105,7 @@ function Home() {
       <BaseStyles>
         <div className="main-container">
           <div className="map-container">
-            <div className="search-bar">
-            <SearchBar />
-
-            </div>
-
+            <div className="search-bar"></div>
             <Map center={center} zoom={zoom}>
               <Layers>
                 <TileLayer source={new OSM()} zIndex={1} opacity={1} />
@@ -117,11 +113,16 @@ function Home() {
               </Layers>
               <FullScreenMapControl />
             </Map>
-            <SideBar
-              setToggleWeather={setToggleWeather}
+            <Box className="search-bar"
+              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+              <SearchBar />
+              <SideBar
               setToggleCurrentCondition={setToggleCurrentConditions}
+              setToggleWeather={setToggleWeather}
               setToggleWindDirection={setToggleWindDirection}
-            />
+              />
+            </Box>
+
             <Box
               className="tool-list"
               sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}

@@ -1,6 +1,8 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import Sidebar from "../../Layout/Sidebar/sidebar";
+
 
 function SearchBar() {
   return (
@@ -26,7 +28,6 @@ const Search = styled("div")(({ theme }) => ({
     backgroundColor: alpha(theme.palette.common.white, 0.75),
   },
   marginLeft: theme.spacing(1),
-  
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
     width: "auto",

@@ -8,7 +8,7 @@ import ListItem from "@mui/material/ListItem";
 function ToolList({ opacity, handleOpacityChange }) {
   return (
     <>
-      <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      <Box sx={{ width: "100%", maxWidth: 150 }}>
         <List>
           <ListItem disablePadding>
             <Typography id="discrete-slider-small-steps" gutterBottom>

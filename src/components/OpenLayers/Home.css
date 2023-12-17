@@ -1,11 +1,9 @@
 .sidebar {
     width: 100px;
-    padding: 10px;
-    background-color: #333;
     position: absolute;
     color: white;
     left: 0;
-    top: 0;
+    top: 50px;
     bottom: 0;
     z-index: 1000;
 }
@@ -18,7 +16,6 @@
 .map-container {
     height: 100%;
     position: relative;
-    /* Set the map container to relative */
 }
 
 .map-container:-webkit-full-screen {
@@ -33,9 +30,15 @@
     height: 100%;
 }
 
-.search-bar{
-    width: 100%;
-    margin-left: 70px;
+
+
+.search-bar {
+    position: absolute;
+    bottom: 10px;
+    top: 10px;
+    width: 400px;
+    padding-bottom: 15%;
+    margin-left: 20px;
 }
 
 .tool-list {
