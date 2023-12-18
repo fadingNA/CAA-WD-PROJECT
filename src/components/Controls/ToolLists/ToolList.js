@@ -2,38 +2,56 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
+import IconButton from "@mui/material/IconButton";
 import OpacityIcon from "@mui/icons-material/Opacity";
-import { styled } from "@mui/material/styles";
-import AirTwoToneIcon from "@mui/icons-material/AirTwoTone";
-import AcUnitTwoToneIcon from "@mui/icons-material/AcUnitTwoTone";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AirIcon from '@mui/icons-material/Air';
+import ThermostatIcon from '@mui/icons-material/Thermostat';
 
 function ToolList({ opacity, handleOpacityChange }) {
+  const [isVisible, setIsVisible] = React.useState(true);
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
+
   return (
     <Box
       sx={{
         width: "100%",
-        maxWidth: 1290,
-        display: "flex", 
-        flexDirection: "row", 
-        alignItems: "center", 
+        maxWidth: 150,
+        bgcolor: "background.paper",
+        padding: "1rem",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         position: "absolute",
-
-
+        top: 0,
+        right: 0,
+        opacity: isVisible ? 1 : 0.7,
+        transition: "opacity 0.5s ease", // Smooth transition for the opacity
       }}
     >
-      <List sx={{ display: "flex", flexDirection: "row", padding: 0 }}>
-        <ListItem>
-          <AirTwoToneIcon />
-        </ListItem>
-        <ListItem>
+      <IconButton onClick={toggleVisibility} sx={{ color: "black" , zIndex: "1000"}}>
+        {isVisible ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+      </IconButton>
+      
+      {isVisible && (
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <Typography id="discrete-slider-small-steps" gutterBottom>
             <OpacityIcon fontSize="large" />
           </Typography>
-        </ListItem>
-        <ListItem>
-          <PrettoSlider
+          <Slider
             value={opacity}
             onChange={handleOpacityChange}
             step={10}
@@ -42,8 +60,45 @@ function ToolList({ opacity, handleOpacityChange }) {
             max={100}
             valueLabelDisplay="auto"
           />
-        </ListItem>
-      </List>
+          <Typography id="discrete-slider-small-steps" gutterBottom>
+            <AcUnitIcon fontSize="large" />
+          </Typography>
+          <Slider
+            value={opacity}
+            onChange={handleOpacityChange}
+            step={10}
+            marks
+            min={10}
+            max={100}
+            valueLabelDisplay="auto"
+          />
+          <Typography id="discrete-slider-small-steps" gutterBottom>
+            <AirIcon fontSize="large" />
+          </Typography>
+          <Slider
+            value={opacity}
+            onChange={handleOpacityChange}
+            step={10}
+            marks
+            min={10}
+            max={100}
+            valueLabelDisplay="auto"
+          />
+          <Typography id="discrete-slider-small-steps" gutterBottom>
+            <ThermostatIcon fontSize="large" />
+          </Typography>
+          <Slider
+            value={opacity}
+            onChange={handleOpacityChange}
+            step={10}
+            marks
+            min={10}
+            max={100}
+            valueLabelDisplay="auto"
+          />
+        </Box>
+        
+      )}
     </Box>
   );
 }
@@ -59,42 +114,3 @@ export function toggleControl({
   if (!windToggleControl) windToggleControl = true;
   if (!opacityToggleControl) opacityToggleControl = true;
 }
-
-const PrettoSlider = styled(Slider)({
-  color: "#52af77",
-  height: 8,
-  "& .MuiSlider-track": {
-    border: "none",
-  },
-  "& .MuiSlider-thumb": {
-    height: 24,
-    width: 24,
-    backgroundColor: "#fff",
-    border: "2px solid currentColor",
-    "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
-      boxShadow: "inherit",
-    },
-    "&:before": {
-      display: "none",
-    },
-  },
-  "& .MuiSlider-valueLabel": {
-    lineHeight: 1.2,
-    fontSize: 12,
-    background: "unset",
-    padding: 0,
-    width: 32,
-    height: 32,
-    borderRadius: "50% 50% 50% 0",
-    backgroundColor: "#52af77",
-    transformOrigin: "bottom left",
-    transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
-    "&:before": { display: "none" },
-    "&.MuiSlider-valueLabelOpen": {
-      transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
-    },
-    "& > *": {
-      transform: "rotate(45deg)",
-    },
-  },
-});

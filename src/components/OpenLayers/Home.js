@@ -44,10 +44,7 @@ function Home() {
           source={
             new TileWMS({
               url: WMS[0].URL,
-              style: {
-               
-                
-              },
+              style: {},
               params: {
                 LAYERS: layerConfig.params.LAYERS,
                 TILED: layerConfig.params.TILED,
@@ -127,17 +124,14 @@ function Home() {
                 setToggleWindDirection={setToggleWindDirection}
               />
             </Box>
-
+            <ToolList
+              opacity={opacity}
+              handleOpacityChange={handleOpacityChange}
+            />
             <Box
               className="tool-list"
               sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
-              <ToolList
-                opacity={opacity}
-                handleOpacityChange={handleOpacityChange}
-              />
-              <div className="legend">3233</div>
-            </Box>
+            ></Box>
           </div>
         </div>
       </BaseStyles>
