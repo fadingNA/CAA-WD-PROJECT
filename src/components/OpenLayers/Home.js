@@ -11,8 +11,8 @@ import ImageLayer from "./Layers/ImageLayer";
 import FullScreenMapControl from "./ControlButton/FullScreen";
 import { ThemeProvider, BaseStyles, Box } from "@primer/react";
 import WMS from "../../public/data/data";
-import ToolList from "../Controls/ToolLists/ToolList";
 import SearchBar from "../Controls/SearchBars/SearchBar";
+import DrawerComponent from "../Controls/Drawyers/DrawyerCompo";
 
 function Home() {
   const [center] = useState(fromLonLat([-74, 56]));
@@ -124,14 +124,13 @@ function Home() {
                 setToggleWindDirection={setToggleWindDirection}
               />
             </Box>
-            <ToolList
+
+            <DrawerComponent
               opacity={opacity}
               handleOpacityChange={handleOpacityChange}
             />
-            <Box
-              className="tool-list"
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            ></Box>
+
+            
           </div>
         </div>
       </BaseStyles>
