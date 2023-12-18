@@ -14,8 +14,7 @@
 }
 
 .map-container {
-    height: 100%;
-    position: relative;
+    width: 100%;
 }
 
 .map-container:-webkit-full-screen {
@@ -51,6 +50,7 @@
     .legend {
         position: absolute;
         bottom: 50px;
+        right: 0;
         width: 360px;
         background: linear-gradient(to right,
                 #4815AA,

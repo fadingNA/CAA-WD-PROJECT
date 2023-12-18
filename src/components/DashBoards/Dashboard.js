@@ -8,52 +8,82 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Sliders from "../Controls/Sliders/Slider";
+import TorontoCover from "../../public/assets/Toronto_cover.png";
+import BankokCover from "../../public/assets/Bangkok_cover.webp";
 
 function Dashboard() {
   return (
-    <>
+    <Box
+      width={"100%"}
+      paddingY={{ base: "2rem", sm: "2rem" }}
+      paddingX={{ base: "1rem", sm: "2rem" }}
+      backgroundColor={"#1E1E1E"}
+    >
+      <Typography
+        fontSize={{ base: "5rem", sm: "4rem" }}
+        lineHeight={"shorter"}
+        fontWeight={"bold"}
+        paddingX={"2rem"}
+        textAlign={"center"}
+        color="white"
+      >
+        Weather Dashboard
+      </Typography>
+
       <Box
-        position="relative"
-        minHeight={{ base: "110vh", sm: "60vh" }}
-        backgroundColor="white"
-        backgroundPosition="center"
-        backgroundAttachment="fixed"
+        display="flex"
+        flexDirection={{ xs: "column", md: "row" }}
+        justifyContent="space-around"
+        alignItems="start"
       >
         <Box
-          position="absolute"
-          width="100%"
-          height="100%"
-          opacity="0.85"
-          backgroundColor="blue.900"
-          padding="1rem"
-        ></Box>
-        <Box
-          display="flex"
-          flexDirection={{ base: "column", sm: "row" }}
-          justifyContent={{ base: "flex-start", sm: "space-between" }}
-          alignItems="center"
-          maxWidth="1289"
-          position="absolute"
-          color="white"
-          fontWeight="light"
-          left="0"
-          right="0"
-          top="0"
-          margin="auto"
-          padding="1rem"
+          component={Paper}
+          sx={{
+            flex: 1,
+            marginRight: "1rem",
+            marginLeft: "1rem",
+            marginBottom: { xs: "1rem", md: 0 },
+          }}
         >
-          <Box width={{ base: "100%", sm: "50%" }}>
-            <Typography variant="h4" component="h4" gutterBottom color="#333">
-              Dashboard
-            </Typography>
-            {createTable()}
-          </Box>
+          {createTable()}
+        </Box>
+
+        <Box
+          sx={{
+            flex: 1,
+            maxWidth: 500,
+            marginRight: "1rem",
+            marginLeft: "1rem",
+          }}
+        >
+          <Sliders weatherProperties={weatherProperties} />
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
 
+export const weatherProperties = [
+  {
+    url: BankokCover,
+    city: "Bangkok",
+    temperature: "30",
+    description: "Cloudy",
+  },
+  {
+    url: BankokCover,
+    city: "Bangkok",
+    temperature: "30",
+    description: "Cloudy",
+  },
+  {
+    url: TorontoCover,
+    city: "Toronto",
+    temperature: "10",
+    description: "Cloudy",
+  },
+];
 export default Dashboard;
 
 export const rows = [

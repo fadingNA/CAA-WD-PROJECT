@@ -13,7 +13,6 @@ import { ThemeProvider, BaseStyles, Box } from "@primer/react";
 import WMS from "../../public/data/data";
 import ToolList from "../Controls/ToolLists/ToolList";
 import SearchBar from "../Controls/SearchBars/SearchBar";
-import { bgcolor } from "@mui/system";
 
 function Home() {
   const [center] = useState(fromLonLat([-74, 56]));
@@ -45,6 +44,10 @@ function Home() {
           source={
             new TileWMS({
               url: WMS[0].URL,
+              style: {
+               
+                
+              },
               params: {
                 LAYERS: layerConfig.params.LAYERS,
                 TILED: layerConfig.params.TILED,
@@ -113,13 +116,15 @@ function Home() {
               </Layers>
               <FullScreenMapControl />
             </Map>
-            <Box className="search-bar"
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+            <Box
+              className="search-bar"
+              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            >
               <SearchBar />
               <SideBar
-              setToggleCurrentCondition={setToggleCurrentConditions}
-              setToggleWeather={setToggleWeather}
-              setToggleWindDirection={setToggleWindDirection}
+                setToggleCurrentCondition={setToggleCurrentConditions}
+                setToggleWeather={setToggleWeather}
+                setToggleWindDirection={setToggleWindDirection}
               />
             </Box>
 
