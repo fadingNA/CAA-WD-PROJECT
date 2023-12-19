@@ -25,9 +25,11 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import LoginIcon from "@mui/icons-material/Login";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const drawerWidth = 240;
-const closedDrawerWidth = 50;
+const closedDrawerWidth = 70;
 
 export default function DrawerComponent({ opacity, handleOpacityChange }) {
   const theme = useTheme();
@@ -43,7 +45,7 @@ export default function DrawerComponent({ opacity, handleOpacityChange }) {
   return (
     <>
       {" "}
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", height: "200px" }}>
         <CssBaseline />
         <AppBar position="fixed" open={open}>
           <Toolbar>
@@ -80,7 +82,7 @@ export default function DrawerComponent({ opacity, handleOpacityChange }) {
             </IconButton>
           </DrawerHeader>
           <List>
-            <CollapsibleListItem primary="World">
+            <CollapsibleListItem primary="World" textWhenClosed={"test"}>
               {[{ name: "OSM" }, { name: "Google" }, { name: "Bing" }].map(
                 (text, index) => (
                   <ListItemButton key={text}>
@@ -152,33 +154,17 @@ export default function DrawerComponent({ opacity, handleOpacityChange }) {
           </List>
           <Divider />
           <List>
-            {["Air Temperature", "Wind Direction", "Current Conditions"].map(
-              (text, index) => (
-                <ListItemButton key={text}>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              )
-            )}
+            {["Favourite", "Login"].map((text, index) => (
+              <ListItemButton key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <FavoriteBorderIcon /> : <LoginIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            ))}
           </List>
           <Divider />
-
-          <Divider />
-          <ListItem></ListItem>
         </Drawers>
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            p: 3,
-            width: { sm: `calc(100% - ${open ? drawerWidth : 0}px)` },
-            ml: "auto",
-          }}
-        >
-          {/* <Play Action Go here/> */}
-        </Box>
       </Box>
     </>
   );
@@ -241,9 +227,10 @@ const Drawers = styled(MuiDrawer, {
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   position: "absolute",
-  top: 64,
+  top: 0, // Changed from 64 to 0 to start from the top
   right: 0,
-  height: "calc(100% - 64px)",
+  bottom: 0, // Added to extend to the bottom of the parent container
+  height: "auto", // Changed from a calculated value to 'auto'
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),

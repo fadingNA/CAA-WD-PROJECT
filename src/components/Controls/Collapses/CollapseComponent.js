@@ -5,6 +5,7 @@ import {
   ListItemText,
   Collapse,
 } from "@mui/material";
+import Box from "@mui/material/Box";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import React from "react";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
@@ -26,25 +27,17 @@ const CollapsibleListItem = ({ primary, children, textWhenClosed }) => {
             alignItems: "center",
             minWidth: "auto",
             justifyContent: "center",
-
+            pr: 4,
           }}
         >
           <RadioButtonCheckedIcon fontSize="small" />
-          {open ? null : <Typography variant="caption">Layer</Typography>}
         </ListItemIcon>
+
         <ListItemText
-          sx={{ pl: 4 }}
           primary={
             <Typography variant="body1" component="div">
               {primary}
             </Typography>
-          }
-          secondary={
-            open ? null : (
-              <Typography variant="caption" component="div">
-                {textWhenClosed}
-              </Typography>
-            )
           }
         />
         {open ? <ExpandLess /> : <ExpandMore />}

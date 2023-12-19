@@ -103,9 +103,8 @@ function Home() {
   return (
     <ThemeProvider>
       <BaseStyles>
-        <div className="main-container">
-          <div className="map-container">
-            <div className="search-bar"></div>
+        <Box className="main-container">
+          <Box className="map-container">
             <Map center={center} zoom={zoom}>
               <Layers>
                 <TileLayer source={new OSM()} zIndex={1} opacity={1} />
@@ -113,26 +112,24 @@ function Home() {
               </Layers>
               <FullScreenMapControl />
             </Map>
-            <Box
-              className="search-bar"
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
-              <SearchBar />
-              <SideBar
-                setToggleCurrentCondition={setToggleCurrentConditions}
-                setToggleWeather={setToggleWeather}
-                setToggleWindDirection={setToggleWindDirection}
-              />
-            </Box>
+          </Box>
 
+          <Box
+            className="search-bar"
+            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          >
+            <SearchBar />
+            <SideBar
+              setToggleCurrentCondition={setToggleCurrentConditions}
+              setToggleWeather={setToggleWeather}
+              setToggleWindDirection={setToggleWindDirection}
+            />
             <DrawerComponent
               opacity={opacity}
               handleOpacityChange={handleOpacityChange}
             />
-
-            
-          </div>
-        </div>
+          </Box>
+        </Box>
       </BaseStyles>
     </ThemeProvider>
   );

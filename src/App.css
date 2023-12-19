@@ -1,34 +1,5 @@
-.sidebar {
-    width: 100px;
-    padding: 10px;
-    background-color: #333;
-    position: absolute;
-    color: white;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 1000;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-
-.map-container:-webkit-full-screen {
-    height: 100%;
-}
-.map-container:-ms-fullscreen {
-    height: 100%;
-}
-.map-container:fullscreen {
-    height: 100%;
-}
-
-
-
-.control-button {
-    position: absolute;
-    top: 10px;
-    bottom: 45px;
-    left: 95%; 
-    background-color: aliceblue;
-    border-radius: 40cm;
-}
- 
-  
