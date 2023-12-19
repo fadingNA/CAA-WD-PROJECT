@@ -84,6 +84,29 @@ const wmsdata = [
       },
     ],
   },
+  {
+    URL: "https://api.ellipsis-drive.com/v3/ogc/wmts/58da67a5-db74-446f-ab75-e2672f2eaf5d",
+    Setting: [
+      {
+        type: "TileLayer",
+        name: "Ellipsis Drive Layer - January 2010",
+        params: {
+          LAYERS:
+            "55d4eab4-cff7-460a-ae66-f62601fb565d_5c2ee154-20c1-4c4f-97c5-fc887ff5e737",
+          format: "image/png",
+          version: "1.0.0",
+          TILED: true,
+          token:
+            "epat_VY51YX0ThQDmYunn56PITp7Ln1f1YSwJagiB056zRboxX5DivzePcftBSybOp953",
+          tileSize: 256,
+        },
+        opacity: 0.5,
+        zIndex: 3,
+        serverType: "wmts",
+        matrixSet: "matrix_5",
+      },
+    ],
+  },
 ];
 
 export default wmsdata;

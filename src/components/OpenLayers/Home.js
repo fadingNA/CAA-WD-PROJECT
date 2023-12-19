@@ -13,6 +13,7 @@ import { ThemeProvider, BaseStyles, Box } from "@primer/react";
 import WMS from "../../public/data/data";
 import SearchBar from "../Controls/SearchBars/SearchBar";
 import DrawerComponent from "../Controls/Drawyers/DrawyerCompo";
+import { Ellipsis } from "react-bootstrap/esm/PageItem";
 
 function Home() {
   const [center] = useState(fromLonLat([-74, 56]));
@@ -20,6 +21,7 @@ function Home() {
   const [layers, setLayers] = useState([]);
   const [toggleWeather, setToggleWeather] = useState(false);
   const [toggleWindDirection, setToggleWindDirection] = useState(false);
+  const [toggleEllipsis, setToggleEllipsis] = useState(false);
   const [toggleCurrentConditions, setToggleCurrentConditions] = useState(false);
   const [opacity, setOpacity] = useState(1);
 
@@ -30,14 +32,19 @@ function Home() {
     } else {
       console.error("WMS data is not in the expected format:", WMS);
     }
-  }, [toggleWeather, toggleWindDirection, toggleCurrentConditions]);
+  }, [
+    toggleWeather,
+    toggleWindDirection,
+    toggleCurrentConditions,
+    opacity,
+    toggleEllipsis,
+  ]);
 
   const createLayer = (layerConfig) => {
     const isVisible = shouldLayerBeVisible(layerConfig.name);
     if (!isVisible) return null;
     if (layerConfig.type === "TileLayer") {
       console.log(opacity);
-
       console.log(layerConfig.zIndex);
       return (
         <TileLayer
@@ -92,6 +99,8 @@ function Home() {
         return toggleWindDirection;
       case "Current Conditions":
         return toggleCurrentConditions;
+      case Ellipsis:
+        return toggleEllipsis;
       default:
         return false;
     }
@@ -123,6 +132,7 @@ function Home() {
               setToggleCurrentCondition={setToggleCurrentConditions}
               setToggleWeather={setToggleWeather}
               setToggleWindDirection={setToggleWindDirection}
+              setToggleEllipsis={setToggleEllipsis}
             />
             <DrawerComponent
               opacity={opacity}

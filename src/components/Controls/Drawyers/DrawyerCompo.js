@@ -27,6 +27,8 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import LoginIcon from "@mui/icons-material/Login";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Favourite from "../../Users/Favourites";
+import Login from "../../Users/Logins";
 
 const drawerWidth = 240;
 const closedDrawerWidth = 70;
@@ -34,6 +36,12 @@ const closedDrawerWidth = 70;
 export default function DrawerComponent({ opacity, handleOpacityChange }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [showLoginForm, setShowLoginForm] = React.useState(false);
+
+  const toggleLoginForm = () => {
+    setShowLoginForm(!showLoginForm);
+  };
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -145,23 +153,35 @@ export default function DrawerComponent({ opacity, handleOpacityChange }) {
                 )
               )}
             </CollapsibleListItem>
-            <CollapsibleListItem primary="Vector Layers">
-              <ToolList
-                opacity={opacity}
-                handleOpacityChange={handleOpacityChange}
-              />
+            <CollapsibleListItem primary="Layers Adjustment">
+              <ListItemButton>
+                <ListItemText
+                  primary={
+                    <ToolList
+                      opacity={opacity}
+                      handleOpacityChange={handleOpacityChange}
+                    />
+                  }
+                />
+              </ListItemButton>
             </CollapsibleListItem>
           </List>
           <Divider />
           <List>
-            {["Favourite", "Login"].map((text, index) => (
-              <ListItemButton key={text}>
+            <CollapsibleListItem primary="Favourite">
+              <ListItemButton>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <FavoriteBorderIcon /> : <LoginIcon />}
+                  <FavoriteBorderIcon />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={<Favourite />} />
               </ListItemButton>
-            ))}
+            </CollapsibleListItem>
+            <CollapsibleListItem primary="Login">
+              <ListItemButton onClick={toggleLoginForm}>
+                <ListItemText primary="Login here" />
+              </ListItemButton>
+              {showLoginForm && <Login />}
+            </CollapsibleListItem>
           </List>
           <Divider />
         </Drawers>

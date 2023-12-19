@@ -4,9 +4,9 @@ import logo from "../../../public/assets/CAA_logo.png";
 
 function Sidebar({
   setToggleWeather,
-  setToggleName,
   setToggleCurrentCondition,
   setToggleWindDirection,
+  setToggleEllipsis,
 }) {
   return (
     <div className="sidebar">
@@ -20,6 +20,9 @@ function Sidebar({
       </button>
       <button onClick={() => setToggleWindDirection((toggle) => !toggle)}>
         Check Wind Direction
+      </button>
+      <button onClick={() => setToggleEllipsis((toggle) => !toggle)}>
+        Open Ellipsis
       </button>
     </div>
   );
