@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./Home.css";
 import Map from "./Maps/Maps";
 import { Layers, TileLayer } from "./Layers/index";
@@ -13,7 +13,7 @@ import { ThemeProvider, BaseStyles, Box } from "@primer/react";
 import WMS from "../../public/data/data";
 import SearchBar from "../Controls/SearchBars/SearchBar";
 import DrawerComponent from "../Controls/Drawyers/DrawyerCompo";
-import { Ellipsis } from "react-bootstrap/esm/PageItem";
+
 import XYZLayer from "./Layers/XYZLayer";
 
 import baseMapData from "../../public/data/basemap_data";
@@ -36,13 +36,10 @@ function Home() {
     } else {
       console.error("WMS data is not in the expected format:", WMS);
     }
-  }, [
-    toggleWeather,
-    toggleWindDirection,
-    toggleCurrentConditions,
-    opacity,
-    toggleEllipsis,
-  ]);
+    return () => {
+      setLayers([]);
+    };
+  }, []);
 
   const selectBaseMap = (baseMapName) => {
     setActiveBaseMap(baseMapName);
@@ -64,7 +61,7 @@ function Home() {
     );
   };
 
-  const createLayer = (layerConfig) => {
+  const createLayer = useCallback((layerConfig) => {
     const isVisible = shouldLayerBeVisible(layerConfig.name);
     if (!isVisible) return null;
     if (layerConfig.type === "TileLayer") {
@@ -127,7 +124,7 @@ function Home() {
     }
 
     return null;
-  };
+  }, []);
 
   const shouldLayerBeVisible = (layerName) => {
     switch (layerName) {
