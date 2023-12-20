@@ -1,10 +1,4 @@
-1. Clone the repository:
-   ```bash
-   git clone fadingna/caa-wd-project
-   cd wd-project
-   npm install
-   npm start
-
+<img width="1280" alt="MicrosoftTeams-image (4)" src="https://github.com/fadingNA/CAA-WD-PROJECT/assets/94852295/3ff08e2d-ba1e-4bc5-80f6-5d45243bb7ca">
 
 
 ## Usage
