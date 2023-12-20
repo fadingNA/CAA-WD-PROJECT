@@ -1,13 +1,25 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Slider from '@mui/material/Slider';
-import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
-import PauseRounded from '@mui/icons-material/PauseRounded';
-import PlayArrowRounded from '@mui/icons-material/PlayArrowRounded';
-import FastForwardRounded from '@mui/icons-material/FastForwardRounded';
-import FastRewindRounded from '@mui/icons-material/FastRewindRounded';
-import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
-import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded';
+import { createTheme, ThemeProvider } from '@material-ui/core';
+import AudioPlayer from 'material-ui-audio-player';
+import { blueGrey } from '@mui/material/colors';
+import { indigo } from '@material-ui/core/colors';
+
+
+
+
+const theme = createTheme({
+    palette: {
+        type: "light",
+        primary: blueGrey,
+        secondary: indigo,
+    }
+});
+
+export default function WeatherPlayer(){
+    return (<>
+   
+    </>)
+}
+
+
+

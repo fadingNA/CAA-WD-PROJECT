@@ -13,9 +13,10 @@ import { ThemeProvider, BaseStyles, Box } from "@primer/react";
 import WMS from "../../public/data/data";
 import SearchBar from "../Controls/SearchBars/SearchBar";
 import DrawerComponent from "../Controls/Drawyers/DrawyerCompo";
-
+import deepPurple from "@material-ui/core/colors/deepPurple";
+import indigo from "@material-ui/core/colors/indigo";
 import XYZLayer from "./Layers/XYZLayer";
-
+import createTheme from "@material-ui/core/styles/createTheme";
 import baseMapData from "../../public/data/basemap_data";
 
 function Home() {
@@ -61,7 +62,7 @@ function Home() {
     );
   };
 
-  const createLayer = useCallback((layerConfig) => {
+  const createLayer = (layerConfig) => {
     const isVisible = shouldLayerBeVisible(layerConfig.name);
     if (!isVisible) return null;
     if (layerConfig.type === "TileLayer") {
@@ -81,7 +82,7 @@ function Home() {
               transition: layerConfig.transition || 0,
             })
           }
-          zIndex={layerConfig.zIndex || 1}
+          zIndex={5}
           opacity={opacity / 100}
           visible={isVisible}
         />
@@ -123,8 +124,8 @@ function Home() {
       );
     }
 
-    return null;
-  }, []);
+    return () => ({})
+  };
 
   const shouldLayerBeVisible = (layerName) => {
     switch (layerName) {
@@ -144,15 +145,23 @@ function Home() {
     setOpacity(newOpacity);
   };
 
+  const theme = createTheme({
+    palette: {
+      type: "light",
+      primary: deepPurple,
+      secondary: indigo
+    }
+  });
+
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
       <BaseStyles>
         <Box className="main-container">
           <Box className="map-container">
             <Map center={center} zoom={zoom}>
               <Layers>
                 <TileLayer source={new OSM()} zIndex={0} opacity={1} />
-                {console.log(activeBaseMap)}
+                {console.log(WMS[0].Setting.map(createLayer))}
                 {createBaseMap(activeBaseMap)}
                 {WMS[0].Setting.map(createLayer)}
               </Layers>

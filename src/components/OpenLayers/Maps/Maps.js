@@ -10,6 +10,7 @@ function Map({ children, center, zoom, selectedLayer }) {
   const mapRef = React.useRef();
   const popupRef = React.useRef();
   const popupContentRef = React.useRef();
+  const legendContentRef = React.useRef();
   const overlayRef = React.useRef();
   const [map, setMap] = useState(null);
 
@@ -71,6 +72,9 @@ function Map({ children, center, zoom, selectedLayer }) {
         "EPSG:3857",
         { INFO_FORMAT: "application/json" }
       );
+      
+      //console.log(urlLgend)
+      
       overlayRef.current.setPosition(coordinate);
       if (url) {
         console.log("Fetching data from URL:", url); // For debugging
@@ -115,6 +119,7 @@ function Map({ children, center, zoom, selectedLayer }) {
           onClick={() => overlayRef.current.setPosition(undefined)}
         ></button>
         <div ref={popupContentRef} id="popup-content"></div>
+        
       </div>
     </MapContext.Provider>
   );

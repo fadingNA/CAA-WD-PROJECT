@@ -190,6 +190,7 @@ export default function DrawerComponent({
           </List>
           <Divider />
         </Drawers>
+       
       </Box>
     </>
   );
@@ -210,7 +211,7 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  width: `${closedDrawerWidth}px`, // Width when the drawer is closed
+  width: `${closedDrawerWidth}px`, 
   [theme.breakpoints.up("sm")]: {
     width: `${closedDrawerWidth}px`,
   },
