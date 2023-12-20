@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import Map from "./Maps/Maps";
 import { Layers, TileLayer } from "./Layers/index";
@@ -13,11 +13,9 @@ import { ThemeProvider, BaseStyles, Box } from "@primer/react";
 import WMS from "../../public/data/data";
 import SearchBar from "../Controls/SearchBars/SearchBar";
 import DrawerComponent from "../Controls/Drawyers/DrawyerCompo";
-import deepPurple from "@material-ui/core/colors/deepPurple";
-import indigo from "@material-ui/core/colors/indigo";
 import XYZLayer from "./Layers/XYZLayer";
-import createTheme from "@material-ui/core/styles/createTheme";
 import baseMapData from "../../public/data/basemap_data";
+import WeatherPlayer from "../Animation/Players";
 
 function Home() {
   const [center] = useState(fromLonLat([-74, 56]));
@@ -124,7 +122,7 @@ function Home() {
       );
     }
 
-    return () => ({})
+    return () => ({});
   };
 
   const shouldLayerBeVisible = (layerName) => {
@@ -145,19 +143,11 @@ function Home() {
     setOpacity(newOpacity);
   };
 
-  const theme = createTheme({
-    palette: {
-      type: "light",
-      primary: deepPurple,
-      secondary: indigo
-    }
-  });
-
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <BaseStyles>
         <Box className="main-container">
-          <Box className="map-container">
+          <Box className="map-container" sx={{ position: "relative" }}>
             <Map center={center} zoom={zoom}>
               <Layers>
                 <TileLayer source={new OSM()} zIndex={0} opacity={1} />
@@ -166,6 +156,7 @@ function Home() {
                 {WMS[0].Setting.map(createLayer)}
               </Layers>
               <FullScreenMapControl />
+              <WeatherPlayer />
             </Map>
           </Box>
 
