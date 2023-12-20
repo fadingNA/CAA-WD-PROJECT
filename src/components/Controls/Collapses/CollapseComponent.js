@@ -28,6 +28,7 @@ const CollapsibleListItem = ({ primary, children, textWhenClosed }) => {
             minWidth: "auto",
             justifyContent: "center",
             pr: 4,
+            py: 0,
           }}
         >
           <RadioButtonCheckedIcon fontSize="small" />
@@ -39,11 +40,12 @@ const CollapsibleListItem = ({ primary, children, textWhenClosed }) => {
               {primary}
             </Typography>
           }
+          sx={{ py: 0, pl: 0, my: 0 }}
         />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding sx={{ pl: 4 }}>
+      <Collapse in={open} timeout="auto" unmountOnExit sx={{ py: 0 }}>
+        <List component="div" sx={{ py: 0, pl: 0 }}>
           {children}
         </List>
       </Collapse>

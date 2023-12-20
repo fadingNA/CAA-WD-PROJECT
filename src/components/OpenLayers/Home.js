@@ -14,6 +14,8 @@ import WMS from "../../public/data/data";
 import SearchBar from "../Controls/SearchBars/SearchBar";
 import DrawerComponent from "../Controls/Drawyers/DrawyerCompo";
 import { Ellipsis } from "react-bootstrap/esm/PageItem";
+import XYZLayer from "./Layers/XYZLayer";
+import XYZ from "ol/source/XYZ";
 
 function Home() {
   const [center] = useState(fromLonLat([-74, 56]));
@@ -24,6 +26,7 @@ function Home() {
   const [toggleEllipsis, setToggleEllipsis] = useState(false);
   const [toggleCurrentConditions, setToggleCurrentConditions] = useState(false);
   const [opacity, setOpacity] = useState(1);
+  const [activeBaseMap, setActiveBaseMap] = useState("OSM"); // default base map
 
   useEffect(() => {
     if (WMS && WMS[0] && WMS[0].Setting) {
@@ -39,6 +42,10 @@ function Home() {
     opacity,
     toggleEllipsis,
   ]);
+
+  const selectBaseMap = (baseMapName) => {
+    setActiveBaseMap(baseMapName);
+  };
 
   const createLayer = (layerConfig) => {
     const isVisible = shouldLayerBeVisible(layerConfig.name);
@@ -86,6 +93,20 @@ function Home() {
           visible={isVisible}
         />
       );
+    } else if (layerConfig.type === "XYZLayer") {
+      console.log(layerConfig.URL);
+      return (
+        <XYZLayer
+          sourceOptions={{
+            URL: layerConfig.URL,
+            maxZoom: layerConfig.maxZoom,
+            attributions: layerConfig.attributions,
+          }}
+          opacity={opacity / 100}
+          zIndex={1000}
+          visible={isVisible}
+        />
+      );
     }
 
     return null;
@@ -99,7 +120,7 @@ function Home() {
         return toggleWindDirection;
       case "Current Conditions":
         return toggleCurrentConditions;
-      case Ellipsis:
+      case "USGS Imagery":
         return toggleEllipsis;
       default:
         return false;
@@ -116,7 +137,11 @@ function Home() {
           <Box className="map-container">
             <Map center={center} zoom={zoom}>
               <Layers>
-                <TileLayer source={new OSM()} zIndex={1} opacity={1} />
+                {console.log(activeBaseMap)}
+                {activeBaseMap === "Open Street Map" && (
+                  <TileLayer source={new OSM()} zIndex={0} opacity={1} />
+                )}
+
                 {WMS[0].Setting.map(createLayer)}
               </Layers>
               <FullScreenMapControl />
@@ -137,6 +162,7 @@ function Home() {
             <DrawerComponent
               opacity={opacity}
               handleOpacityChange={handleOpacityChange}
+              selectBasedMap={selectBaseMap}
             />
           </Box>
         </Box>

@@ -26,14 +26,18 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import LoginIcon from "@mui/icons-material/Login";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Favourite from "../../Users/Favourites";
 import Login from "../../Users/Logins";
+import baseMapData from "../../../public/data/basemap_data";
 
 const drawerWidth = 240;
 const closedDrawerWidth = 70;
 
-export default function DrawerComponent({ opacity, handleOpacityChange }) {
+export default function DrawerComponent({
+  opacity,
+  handleOpacityChange,
+  selectBasedMap,
+}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [showLoginForm, setShowLoginForm] = React.useState(false);
@@ -48,6 +52,10 @@ export default function DrawerComponent({ opacity, handleOpacityChange }) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleBaseMapChange = (event) => {
+    selectBasedMap(event.target.value);
   };
 
   return (
@@ -90,21 +98,24 @@ export default function DrawerComponent({ opacity, handleOpacityChange }) {
             </IconButton>
           </DrawerHeader>
           <List>
-            <CollapsibleListItem primary="World" textWhenClosed={"test"}>
-              {[{ name: "OSM" }, { name: "Google" }, { name: "Bing" }].map(
-                (text, index) => (
-                  <ListItemButton key={text}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        <Typography variant="button">{text.name}</Typography>
-                      }
+            <CollapsibleListItem primary="Background" textWhenClosed={"test"}>
+              {baseMapData.map((text, index) => (
+                <ListItemButton key={text} sx={{ pl: 2.3, py: 0, my: 0 }}>
+                  <ListItemIcon>
+                    <FormControlLabel
+                      value="layerName"
+                      control={<Radio size="small" 
+                      value={text.name}/>}
+                      onChange={handleBaseMapChange}
                     />
-                  </ListItemButton>
-                )
-              )}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography variant="body2">{text.name}</Typography>
+                    }
+                  />
+                </ListItemButton>
+              ))}
             </CollapsibleListItem>
             <CollapsibleListItem primary="Tile Layers">
               {[{ name: "OSM" }, { name: "Google" }, { name: "Bing" }].map(
@@ -137,22 +148,7 @@ export default function DrawerComponent({ opacity, handleOpacityChange }) {
                 )
               )}
             </CollapsibleListItem>
-            <CollapsibleListItem primary="Bookmark Views">
-              {[{ name: "OSM" }, { name: "Google" }, { name: "Bing" }].map(
-                (text, index) => (
-                  <ListItemButton key={text}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        <Typography variant="button">{text.name}</Typography>
-                      }
-                    />
-                  </ListItemButton>
-                )
-              )}
-            </CollapsibleListItem>
+
             <CollapsibleListItem primary="Layers Adjustment">
               <ListItemButton>
                 <ListItemText
@@ -170,15 +166,12 @@ export default function DrawerComponent({ opacity, handleOpacityChange }) {
           <List>
             <CollapsibleListItem primary="Favourite">
               <ListItemButton>
-                <ListItemIcon>
-                  <FavoriteBorderIcon />
-                </ListItemIcon>
                 <ListItemText primary={<Favourite />} />
               </ListItemButton>
             </CollapsibleListItem>
             <CollapsibleListItem primary="Login">
               <ListItemButton onClick={toggleLoginForm}>
-                <ListItemText primary="Login here" />
+                <LoginIcon />
               </ListItemButton>
               {showLoginForm && <Login />}
             </CollapsibleListItem>
