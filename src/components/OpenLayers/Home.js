@@ -15,7 +15,8 @@ import SearchBar from "../Controls/SearchBars/SearchBar";
 import DrawerComponent from "../Controls/Drawyers/DrawyerCompo";
 import { Ellipsis } from "react-bootstrap/esm/PageItem";
 import XYZLayer from "./Layers/XYZLayer";
-import XYZ from "ol/source/XYZ";
+
+import baseMapData from "../../public/data/basemap_data";
 
 function Home() {
   const [center] = useState(fromLonLat([-74, 56]));
@@ -26,7 +27,7 @@ function Home() {
   const [toggleEllipsis, setToggleEllipsis] = useState(false);
   const [toggleCurrentConditions, setToggleCurrentConditions] = useState(false);
   const [opacity, setOpacity] = useState(1);
-  const [activeBaseMap, setActiveBaseMap] = useState("OSM"); // default base map
+  const [activeBaseMap, setActiveBaseMap] = useState("Open Street Map");
 
   useEffect(() => {
     if (WMS && WMS[0] && WMS[0].Setting) {
@@ -45,6 +46,22 @@ function Home() {
 
   const selectBaseMap = (baseMapName) => {
     setActiveBaseMap(baseMapName);
+  };
+
+  const createBaseMap = (baseMapName) => {
+    const baseMapConfig = baseMapData.find((map) => map.name === baseMapName);
+    if (!baseMapConfig) return null;
+    return (
+      <XYZLayer
+        sourceOptions={{
+          URL: baseMapConfig.URL,
+          maxZoom: baseMapConfig.maxZoom,
+          attributions: baseMapConfig.attributions,
+        }}
+        opacity={opacity / 100}
+        zIndex={1000}
+      />
+    );
   };
 
   const createLayer = (layerConfig) => {
@@ -137,11 +154,9 @@ function Home() {
           <Box className="map-container">
             <Map center={center} zoom={zoom}>
               <Layers>
+                <TileLayer source={new OSM()} zIndex={0} opacity={1} />
                 {console.log(activeBaseMap)}
-                {activeBaseMap === "Open Street Map" && (
-                  <TileLayer source={new OSM()} zIndex={0} opacity={1} />
-                )}
-
+                {createBaseMap(activeBaseMap)}
                 {WMS[0].Setting.map(createLayer)}
               </Layers>
               <FullScreenMapControl />

@@ -41,6 +41,7 @@ export default function DrawerComponent({
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [showLoginForm, setShowLoginForm] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState("");
 
   const toggleLoginForm = () => {
     setShowLoginForm(!showLoginForm);
@@ -55,7 +56,14 @@ export default function DrawerComponent({
   };
 
   const handleBaseMapChange = (event) => {
-    selectBasedMap(event.target.value);
+    console.log(event.target.value);
+    console.log(selectedValue);
+    if (event.target.value === selectedValue) {
+      setSelectedValue("");
+    } else {
+      selectBasedMap(event.target.value);
+      setSelectedValue(event.target.value);
+    }
   };
 
   return (
@@ -99,23 +107,27 @@ export default function DrawerComponent({
           </DrawerHeader>
           <List>
             <CollapsibleListItem primary="Background" textWhenClosed={"test"}>
-              {baseMapData.map((text, index) => (
-                <ListItemButton key={text} sx={{ pl: 2.3, py: 0, my: 0 }}>
-                  <ListItemIcon>
-                    <FormControlLabel
-                      value="layerName"
-                      control={<Radio size="small" 
-                      value={text.name}/>}
-                      onChange={handleBaseMapChange}
+              <RadioGroup value={selectedValue} onChange={handleBaseMapChange}>
+                {baseMapData.map((text, index) => (
+                  <ListItemButton
+                    key={text.name + index}
+                    sx={{ pl: 2.3, py: 0, my: 0 }}
+                  >
+                    <ListItemIcon>
+                      <FormControlLabel
+                        value={selectedValue}
+                        control={<Radio size="small" value={text.name} />}
+                        onChange={handleBaseMapChange}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography variant="body2">{text.name}</Typography>
+                      }
                     />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <Typography variant="body2">{text.name}</Typography>
-                    }
-                  />
-                </ListItemButton>
-              ))}
+                  </ListItemButton>
+                ))}
+              </RadioGroup>
             </CollapsibleListItem>
             <CollapsibleListItem primary="Tile Layers">
               {[{ name: "OSM" }, { name: "Google" }, { name: "Bing" }].map(
