@@ -26,7 +26,7 @@ function Home() {
   const [toggleEllipsis, setToggleEllipsis] = useState(false);
   const [toggleCurrentConditions, setToggleCurrentConditions] = useState(false);
   const [opacity, setOpacity] = useState(1);
-  const [activeBaseMap, setActiveBaseMap] = useState("Open Street Map");
+  const [activeBaseMap, setActiveBaseMap] = useState("");
 
   useEffect(() => {
     if (WMS && WMS[0] && WMS[0].Setting) {
